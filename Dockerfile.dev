@@ -1,0 +1,19 @@
+
+#Use an existing docker image as a base
+FROM node:alpine
+
+#ENV http_proxy http://genproxy.corp.amdocs.com:8080
+WORKDIR /app
+#copy ./ ./
+copy ./package.json ./
+
+#Download and Install a dependency
+RUN npm config set https-proxy http://genproxy.amdocs.com:8080/
+RUN npm install
+copy ./ ./
+
+
+
+#Tell the image what to do when it starts as a container
+#Default command
+CMD ["npm", "run", "start"]
